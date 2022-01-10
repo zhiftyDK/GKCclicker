@@ -25,8 +25,10 @@ firebase.auth().onAuthStateChanged((user) => {
     }
     else {
         //User is signed out
-        chrome.browserAction.onClicked.addListener(function(activeTab){
-            window.open("https://codezhifty.github.io/GKCclicker/", "_blank")
-        });
+        window.open("https://codezhifty.github.io/GKCclicker/", "_blank");
     }
+});
+
+chrome.browserAction.onClicked.addListener(function(activeTab){
+    window.open("https://codezhifty.github.io/GKCclicker/", "_blank");
 });
