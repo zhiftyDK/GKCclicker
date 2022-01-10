@@ -1,0 +1,20 @@
+{
+    "manifest_version": 3,
+    "name": "GKC Extension",
+    "description": "Gorm Kun Coin Clicker by zhiftyDK",
+    "version": "1.0",
+    "action": {
+        "default_popup": "popup.html"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "http://*/*",
+                "https://*/*"
+            ],
+            "js": [
+                "contentscript.js"
+            ]
+        }
+    ]
+}
