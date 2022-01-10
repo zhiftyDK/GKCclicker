@@ -10,20 +10,23 @@ const firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
-chrome.browserAction.onClicked.addListener(function(activeTab){
-    firebase.auth().onAuthStateChanged((user) => {
-        if (user) {
-            // User is signed in
-            window.open("https://www.hackersmansion.me", "_blank");
-        }
-        else {
-            //User is signed out
-        }
-    });
-});
+//Set provider
+var provider = new firebase.auth.GoogleAuthProvider();
 
-chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
-    if(message == "+"){
-        
+//Check if user is logged in
+firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+        // User is signed in
+        chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+            if(message == "+"){
+                
+            }
+        });
+    }
+    else {
+        //User is signed out
+        chrome.browserAction.onClicked.addListener(function(activeTab){
+            window.open("https://codezhifty.github.io/GKCclicker/", "_blank")
+        });
     }
 });
