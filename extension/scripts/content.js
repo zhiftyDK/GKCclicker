@@ -2,7 +2,7 @@
 setInterval(() => {
     let uniqueId = `GKC${Math.floor(Math.random() * 999999)}`;
     const GKC = document.createElement("img");
-    GKC.src = "https://github.com/CodeZhifty/GKCextension/blob/main/images/GKC_Animated.gif?raw=true";
+    GKC.src = "https://github.com/CodeZhifty/GKCclicker/blob/main/extension/images/GKC_Animated.gif?raw=true";
     GKC.id = uniqueId;
     GKC.style.position = "absolute";
     GKC.style.zIndex = "99999";
@@ -14,10 +14,10 @@ setInterval(() => {
     document.querySelectorAll("#" + uniqueId).forEach(element => {
         element.addEventListener("click", function() {
             element.remove();
-            new Audio("https://github.com/CodeZhifty/GKCextension/blob/main/audio/cash_soundeffect.aac?raw=true").play();
+            new Audio("https://github.com/CodeZhifty/GKCclicker/blob/main/extension/audio/cash_soundeffect.aac?raw=true").play();
             chrome.runtime.sendMessage("+", function (response) {
                 console.log(response);
             });
         });
     });
-}, (Math.random() + 1) * 40000);
+}, (Math.random() + 1) * 30000);

@@ -10,25 +10,39 @@ const firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
-//Set provider
-var provider = new firebase.auth.GoogleAuthProvider();
+chrome.identity.getProfileUserInfo(function(userInfo) {
+    let username = userInfo.email.split("@").shift();
+    let email = userInfo.email;
+    let userid = userInfo.id;
+    firebase.database().ref("GKCscoreboard/" + username).on("value", function(GKCscoreboard_object){
+        if(!GKCscoreboard_object.exists()){
+            firebase.database().ref("GKCscoreboard/" + username).set({
+                email: email,
+                userid: userid,
+                GKC: 0
+            }, (error) => {
+                if (error) {
+                  // The write failed...
+                  alert("Couldnt authenticate you, you need to sign into your browser!");
+                }
+            });
+        }
+    });
 
-//Check if user is logged in
-firebase.auth().onAuthStateChanged((user) => {
-    if (user) {
-        // User is signed in
-        chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
-            if(message == "+"){
-                
-            }
-        });
-    }
-    else {
-        //User is signed out
-        window.open("https://codezhifty.github.io/GKCclicker/", "_blank");
-    }
+    chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+        if(message == "+"){
+            firebase.database().ref("GKCscoreboard/" + username).get().then(function(GKCscoreboard_object){
+                const GKC = GKCscoreboard_object.val().GKC
+                firebase.database().ref("GKCscoreboard/" + username).update({
+                    GKC: 1 + GKC
+                });
+            });
+            sendResponse("Added 1 GKC!");
+        }
+    });
 });
 
+
 chrome.browserAction.onClicked.addListener(function(activeTab){
-    window.open("https://codezhifty.github.io/GKCclicker/", "_blank");
+    window.open("https://codezhifty.github.io/GKCclicker/", "_blank")
 });
