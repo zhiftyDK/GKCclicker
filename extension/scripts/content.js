@@ -12,7 +12,7 @@ setInterval(() => {
     GKC.style.left = `${Math.floor(Math.random() * window.innerWidth) * 0.7}px`;
     document.body.appendChild(GKC);
     document.querySelectorAll("#" + uniqueId).forEach(element => {
-        element.addEventListener("click", function() {
+        element.addEventListener("mouseover", function() {
             element.remove();
             new Audio("https://github.com/CodeZhifty/GKCclicker/blob/main/extension/audio/cash_soundeffect.aac?raw=true").play();
             chrome.runtime.sendMessage("+", function (response) {
@@ -20,4 +20,4 @@ setInterval(() => {
             });
         });
     });
-}, (Math.random() + 1) * 30000);
+}, (Math.random() + 1) * 60000);

@@ -65,16 +65,21 @@
     </div>
 
     <div class="container-fluid">
-        <div class="row mt-5">
-            <div class="col-5 text-end">
-                <img src="./extension/images/GKC_Animated.gif">
+        <div class="row text-center mt-5">
+            <div class="col-12">
+                <h1 style="font-size: 80px;">Scoreboard</h1>
             </div>
-            <div class="col-6 mt-4 text-start">
-                <h1>Scoreboard</h1>
-                <p>Check out the current standings of all the GKC Clicker participants!</p>
-                <p>All the Gorm Kun Coins that you collect, can be used in the upcoming shop!</p>
-                <br>
-                <button class="btn btn-warning p-3" onclick="window.open('./scoreboard.html', '_self')">Scoreboard</button>
+        </div>
+        <div class="row mt-2">
+            <div class="col-12 d-flex justify-content-center align-items-center">
+                <table id="scoreboard">
+                    <tr>
+                        <th>Ranking</th>
+                        <th>Username</th>
+                        <th>UserId</th>
+                        <th>GKC Count</th>
+                    </tr>
+                </table>
             </div>
         </div>
     </div>
@@ -82,5 +87,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-database.js"></script>
+    <script src="./scoreboard.js"></script>
 </body>
 </html>
