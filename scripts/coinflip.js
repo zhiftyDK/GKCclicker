@@ -6,6 +6,13 @@ firebase.auth().onAuthStateChanged((user) => {
     }
 });
 
+document.getElementById("coinflipAmount").addEventListener("keyup", function(event) {
+    if (event.keyCode === 13) {
+        event.preventDefault();
+        document.getElementById("coinflipButton").click();
+    }
+});
+
 function flipCoin() {
     firebase.database().ref("GKCscoreboard/" + displayName).get().then(function(GKCscoreboard_object){
         //Check if you have enough money to coinflip

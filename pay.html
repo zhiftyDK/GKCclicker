@@ -12,25 +12,6 @@
         body {
             background-color: #212529;
         }
-
-        table {
-            font-family: arial, sans-serif;
-            border-collapse: collapse;
-            width: 40%;
-            color: black;
-            background-color: white;
-        }
-
-        td, th {
-            border: 1px solid black;
-            text-align: center;
-            padding: 8px;
-        }
-
-        tr:nth-child(even) {
-            border: 1px solid white;
-            background-color: #dddddd;
-        }
     </style>
 </head>
 <body>
@@ -79,19 +60,25 @@
     <div class="container-fluid">
         <div class="row text-center mt-5">
             <div class="col-12">
-                <h1 style="font-size: 60px; color: white;">Scoreboard</h1>
+                <h1 style="font-size: 50px; color: white;">GKC Payments</h1>
             </div>
         </div>
-        <div class="row mt-2">
-            <div class="col-12 d-flex justify-content-center align-items-center">
-                <table id="scoreboard">
-                    <tr>
-                        <th>Ranking</th>
-                        <th>Username</th>
-                        <th>UserId</th>
-                        <th>GKC Count</th>
-                    </tr>
-                </table>
+        <div class="row justify-content-center">
+            <img src="./media/payments.png" style="width: 20vw;">
+        </div>
+        <div class="row justify-content-center mt-4">
+            <div class="col-3 d-flex justify-content-center align-items-center">
+                <input class="form-control m-3" id="friendInput" placeholder="Friend's App Name">
+            </div>
+            <div class="w-100"></div>
+            <div class="col-3 mb-2 d-flex justify-content-center align-items-center">
+                <input class="form-control m-3" id="payAmount" placeholder="Amount">
+            </div>
+        </div>
+        <div class="w-100"></div>
+        <div class="row justify-content-center mt-1">
+            <div class="col-4 mb-2 d-flex justify-content-center align-items-center">
+                <button class="btn btn-warning" onclick="pay()">Pay GKC</button>
             </div>
         </div>
     </div>
@@ -101,6 +88,6 @@
     <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-database.js"></script>
     <script src="./scripts/authentication.js"></script>
-    <script src="./scripts/scoreboard.js"></script>
+    <script src="./scripts/pay.js"></script>
 </body>
 </html>
