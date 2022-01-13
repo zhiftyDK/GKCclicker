@@ -72,13 +72,13 @@
             </div>
             <div class="w-100"></div>
             <div class="col-3 mb-2 d-flex justify-content-center align-items-center">
-                <input class="form-control m-3" id="payAmount" placeholder="Amount">
+                <input class="form-control m-3" id="payAmount" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1')" placeholder="Amount">
             </div>
         </div>
         <div class="w-100"></div>
         <div class="row justify-content-center mt-1">
             <div class="col-4 mb-2 d-flex justify-content-center align-items-center">
-                <button class="btn btn-warning" onclick="pay()">Pay GKC</button>
+                <button class="btn btn-warning" id="payButton" onclick="pay()">Pay GKC</button>
             </div>
         </div>
     </div>

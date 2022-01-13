@@ -70,7 +70,7 @@
                 <video src="./media/red.webm" style="display: none; width: 30vw;" id="redCoinflip" muted></video>
             </div>
             <div class="col-3 d-flex justify-content-center align-items-center">
-                <input id="coinflipAmount" placeholder="Amount" class="form-control m-2">
+                <input id="coinflipAmount" placeholder="Amount" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1')" class="form-control m-2">
                 <select id="coinflipSelect" class="form-select m-2">
                     <option value="red">Red</option>
                     <option value="green">Green</option>
