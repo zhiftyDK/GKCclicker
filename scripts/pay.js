@@ -47,6 +47,8 @@ function pay() {
                         });
                     });
                     transferSuccessAlert(payAmount.value, friendInput.value);
+                    document.getElementById("payAmount").value = "";
+                    document.getElementById("friendInput").value = "";
                 } else {
                     notEnoughAlert();
                 }

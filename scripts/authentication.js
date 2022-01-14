@@ -13,8 +13,25 @@ firebase.initializeApp(firebaseConfig);
 var provider = new firebase.auth.GoogleAuthProvider();
 firebase.auth().onAuthStateChanged((user) => {
     if (user) {
-      // User is signed in
-      loadUserMenu(user.displayName, user.photoURL, user.email);
+        // User is signed in
+        loadUserMenu(user.displayName, user.photoURL, user.email);
+        let username = user.email.split("@").shift();
+        let email = user.email;
+        let userid = user.uid;
+        firebase.database().ref("GKCscoreboard/" + username).on("value", function(GKCscoreboard_object){
+            if(!GKCscoreboard_object.exists()){
+                firebase.database().ref("GKCscoreboard/" + username).set({
+                    email: email,
+                    userid: userid,
+                    GKC: 0
+                }, (error) => {
+                    if (error) {
+                    // The write failed...
+                    alert("Couldnt authenticate you, you need to sign into your browser!");
+                    }
+                });
+            }
+        });
     }
     else {
         //User is signed out
@@ -62,7 +79,7 @@ function loadUserMenu(displayName, photoURL){
 function signOut(){
     firebase.auth().signOut().then(() => {
         // Sign-out successful.
-        window.location.href = "../index.html";
+        window.location.href = "./index.html";
     }).catch((error) => {
         // An error happened.
     });
