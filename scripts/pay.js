@@ -35,16 +35,21 @@ function pay() {
         firebase.database().ref("GKCscoreboard/" + friendInput.value).get().then(function(GKCscoreboard_object){
             if(GKCscoreboard_object.exists()){
                 const GKC = GKCscoreboard_object.val().GKC
-                firebase.database().ref("GKCscoreboard/" + friendInput.value).update({
-                    GKC: GKC + parseInt(payAmount.value)
-                });
-                firebase.database().ref("GKCscoreboard/" + displayName).get().then(function(GKCscoreboard_object2){
-                    const GKC2 = GKCscoreboard_object2.val().GKC
-                    firebase.database().ref("GKCscoreboard/" + displayName).update({
-                        GKC: GKC2 - parseInt(payAmount.value)
+                const payAmountCheck = parseInt(document.getElementById("payAmount").value);
+                if(GKC >= payAmountCheck) {
+                    firebase.database().ref("GKCscoreboard/" + friendInput.value).update({
+                        GKC: GKC + parseInt(payAmount.value)
                     });
-                });
-                transferSuccessAlert(payAmount.value, friendInput.value);
+                    firebase.database().ref("GKCscoreboard/" + displayName).get().then(function(GKCscoreboard_object2){
+                        const GKC2 = GKCscoreboard_object2.val().GKC
+                        firebase.database().ref("GKCscoreboard/" + displayName).update({
+                            GKC: GKC2 - parseInt(payAmount.value)
+                        });
+                    });
+                    transferSuccessAlert(payAmount.value, friendInput.value);
+                } else {
+                    notEnoughAlert();
+                }
             } else {
                 invalidPersonAlert();
             }
@@ -63,6 +68,8 @@ function notAuthAlert() {
         document.getElementById("transferSuccessAlert").remove();
     } else if(document.getElementById("emptyFormAlert")){
         document.getElementById("emptyFormAlert").remove();
+    } else if(document.getElementById("notEnoughAlert")){
+        document.getElementById("notEnoughAlert").remove();
     }
     const alert = document.createElement("div");
     alert.classList = "alert alert-danger alert-dismissible fade show";
@@ -83,6 +90,8 @@ function invalidPersonAlert() {
         document.getElementById("transferSuccessAlert").remove();
     } else if(document.getElementById("emptyFormAlert")){
         document.getElementById("emptyFormAlert").remove();
+    } else if(document.getElementById("notEnoughAlert")){
+        document.getElementById("notEnoughAlert").remove();
     }
     const alert = document.createElement("div");
     alert.classList = "alert alert-danger alert-dismissible fade show";
@@ -103,6 +112,8 @@ function transferSuccessAlert(amount, user) {
         document.getElementById("notAuthAlert").remove();
     } else if(document.getElementById("emptyFormAlert")){
         document.getElementById("emptyFormAlert").remove();
+    } else if(document.getElementById("notEnoughAlert")){
+        document.getElementById("notEnoughAlert").remove();
     }
     const alert = document.createElement("div");
     alert.classList = "alert alert-success alert-dismissible fade show";
@@ -123,6 +134,8 @@ function emptyFormAlert(text) {
         document.getElementById("invalidPersonAlert").remove();
     } else if(document.getElementById("notAuthAlert")){
         document.getElementById("notAuthAlert").remove();
+    } else if(document.getElementById("notEnoughAlert")){
+        document.getElementById("notEnoughAlert").remove();
     }
     const alert = document.createElement("div");
     alert.classList = "alert alert-danger alert-dismissible fade show";
@@ -131,5 +144,27 @@ function emptyFormAlert(text) {
     alert.style.right = "40px";
     alert.style.bottom = "30px";
     alert.innerHTML = `<strong>Error!</strong> You need to specify ${text}! <button type="button" class="btn-close" onclick="document.getElementById('emptyFormAlert').remove()" aria-label="Close"></button>`
+    document.body.appendChild(alert);
+}
+
+function notEnoughAlert() {
+    if(document.getElementById("notEnoughAlert")){
+        document.getElementById("notEnoughAlert").remove();
+    } else if(document.getElementById("losingAlert")){
+        document.getElementById("losingAlert").remove();
+    } else if(document.getElementById("winningAlert")){
+        document.getElementById("winningAlert").remove();
+    } else if(document.getElementById("notEnoughAlert")){
+        document.getElementById("notEnoughAlert").remove();
+    } else if(document.getElementById("notAuthAlert")){
+        document.getElementById("notAuthAlert").remove();
+    }
+    const alert = document.createElement("div");
+    alert.classList = "alert alert-danger alert-dismissible fade show";
+    alert.id = "notEnoughAlert";
+    alert.style.position = "absolute";
+    alert.style.right = "40px";
+    alert.style.bottom = "30px";
+    alert.innerHTML = `<strong>Error!</strong> You don't have enough money to perform this action! <button type="button" class="btn-close" onclick="document.getElementById('notEnoughAlert').remove()" aria-label="Close"></button>`
     document.body.appendChild(alert);
 }

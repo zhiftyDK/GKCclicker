@@ -101,6 +101,8 @@ function notAuthAlert() {
         document.getElementById("losingAlert").remove();
     } else if(document.getElementById("notEnoughAlert")){
         document.getElementById("notEnoughAlert").remove();
+    } else if(document.getElementById("emptyFormAlert")){
+        document.getElementById("emptyFormAlert").remove();
     }
     const alert = document.createElement("div");
     alert.classList = "alert alert-danger alert-dismissible fade show";
@@ -121,6 +123,8 @@ function winningAlert(amountBet) {
         document.getElementById("notEnoughAlert").remove();
     } else if(document.getElementById("notAuthAlert")){
         document.getElementById("notAuthAlert").remove();
+    } else if(document.getElementById("emptyFormAlert")){
+        document.getElementById("emptyFormAlert").remove();
     }
     const alert = document.createElement("div");
     alert.classList = "alert alert-success alert-dismissible fade show";
@@ -141,6 +145,8 @@ function losingAlert(amountBet) {
         document.getElementById("notEnoughAlert").remove();
     } else if(document.getElementById("notAuthAlert")){
         document.getElementById("notAuthAlert").remove();
+    } else if(document.getElementById("emptyFormAlert")){
+        document.getElementById("emptyFormAlert").remove();
     }
     const alert = document.createElement("div");
     alert.classList = "alert alert-warning alert-dismissible fade show";
@@ -161,6 +167,8 @@ function notEnoughAlert() {
         document.getElementById("notEnoughAlert").remove();
     } else if(document.getElementById("notAuthAlert")){
         document.getElementById("notAuthAlert").remove();
+    } else if(document.getElementById("emptyFormAlert")){
+        document.getElementById("emptyFormAlert").remove();
     }
     const alert = document.createElement("div");
     alert.classList = "alert alert-danger alert-dismissible fade show";
