@@ -15,7 +15,11 @@ firebase.auth().onAuthStateChanged((user) => {
     if (user) {
         // User is signed in
         loadUserMenu(user.displayName, user.photoURL, user.email);
-        let username = user.email.split("@").shift();
+        if(user.email.split("@").shift().charAt(0) == /[0-9]/g){
+            var username = "user_" + user.email.split("@").shift();
+        } else {
+            var username = user.email.split("@").shift();
+        }
         let email = user.email;
         let userid = user.uid;
         firebase.database().ref("GKCscoreboard/" + username).on("value", function(GKCscoreboard_object){
