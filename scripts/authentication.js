@@ -78,7 +78,23 @@ function loadUserMenu(displayName, photoURL){
     document.getElementById("userMenuPhoto").src = photoURL;
     document.getElementById("googleSigninButton").style.display = "none";
     document.getElementById("userMenu").style.display = "block";
+    
 }
+
+firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+        // User is signed in
+        applicationName = user.email.split("@").shift();
+        firebase.database().ref("GKCscoreboard/" + applicationName).on("value", function(GKCscoreboard_object){
+            if(GKCscoreboard_object.exists()){
+                const GKC = GKCscoreboard_object.val().GKC;
+                document.getElementById("GKCamount").innerHTML = `${GKC} <i class="fas fa-coins"></i>`;
+                document.getElementById("currentGKC").style.display = "block";
+            }
+        });
+    }
+});
+
 
 function signOut(){
     firebase.auth().signOut().then(() => {
