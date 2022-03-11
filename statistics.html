@@ -71,49 +71,30 @@
 
     <div class="container-fluid mb-5">
         <div class="row mt-5">
-            <div class="col-5 text-end">
-                <img src="./extension/images/GKC_Animated.gif">
-            </div>
-            <div class="col-6 mt-4 text-start">
-                <h1 style="color: white;">Scoreboard</h1>
-                <p style="color: white;">Check out the current standings of all the GKC Clicker participants!</p>
-                <p style="color: white;">All the Gorm Kun Coins that you collect, can be used in the upcoming shop!</p>
+            <div class="col-12 mt-2 text-center">
+                <h1 style="color: white; font-size: 50px;">GKC Statistics</h1>
+                <p style="color: white;">Keep track of different statistics regarding GKC clicker.</p>
+                <p style="color: white;">We have statistics to look at the usage of the app and keep track of activity.</p>
                 <br>
-                <button class="btn btn-warning p-3" onclick="window.open('./scoreboard.html', '_self')">Scoreboard</button>
             </div>
-        </div>
-        <div class="d-flex justify-content-center mt-5"><hr style="color: white; width: 60vw;"></div>
-        <div class="row mt-4">
-            <div class="col-6 mt-5 text-end">
-                <h1 style="color: white;">Coinflip</h1>
-                <p style="color: white;">Bet some money, flip the coin and hope to be lucky!</p>
-                <p style="color: white;">The betting currency is ofcourse GKC!</p>
-                <br>
-                <button class="btn btn-warning p-3" onclick="window.open('./coinflip.html', '_self')">Coinflip</button>
+            <div class="col-12 mt4 d-flex justify-content-center">
+                <div id="GKCamountchart" style="width: 45vw; height: 60vh;"></div>
             </div>
-            <div class="col-5 text-start">
-                <img src="./media/default_homepage.png" style="width: 16vw;">
+            <div class="col-12 mt4 d-flex justify-content-center mt-5">
+                <div id="Userschart" style="width: 45vw; height: 60vh;"></div>
             </div>
-        </div>
-        <div class="d-flex justify-content-center mt-5"><hr style="color: white; width: 60vw;"></div>
-        <div class="row mt-4">
-            <div class="col-5 text-end mb-5">
-                <img src="./media/payments.png" style="width: 16vw;">
-            </div>
-            <div class="col-6 mt-4 text-start">
-                <h1 style="color: white;">Payments</h1>
-                <p style="color: white;">Pay your friends with GKC!</p>
-                <p style="color: white;">The new way to pay your homies back what you owe them!</p>
-                <br>
-                <button class="btn btn-warning p-3" onclick="window.open('./pay.html', '_self')">Payments</button>
+            <div class="col-12 mt4 d-flex justify-content-center mt-5">
+                <div id="Richestpersonchart" style="width: 45vw; height: 60vh;"></div>
             </div>
         </div>
     </div>
 
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-database.js"></script>
     <script src="./scripts/authentication.js"></script>
+    <script src="./scripts/statistics.js"></script>
 </body>
 </html>
