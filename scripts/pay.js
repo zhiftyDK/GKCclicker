@@ -32,29 +32,31 @@ function pay() {
             return;
         }
         firebase.database().ref("GKCscoreboard/" + friendInput.value).get().then(function(GKCscoreboard_object2){
-            var GKC2 = GKCscoreboard_object2.val().GKC
-            firebase.database().ref("GKCscoreboard/" + displayName).get().then(function(GKCscoreboard_object){
-                if(GKCscoreboard_object.exists()){
-                    const GKC = GKCscoreboard_object.val().GKC
-                    const payAmountCheck = parseInt(document.getElementById("payAmount").value);
-                    if(GKC >= payAmountCheck) {
-                        firebase.database().ref("GKCscoreboard/" + displayName).update({
-                            GKC: GKC - parseInt(payAmount.value)
-                        });
-                        firebase.database().ref("GKCscoreboard/" + friendInput.value).update({
-                            GKC: GKC2 + parseInt(payAmount.value)
-                        });
-                        addmoneytofriend();
-                        transferSuccessAlert(payAmount.value, friendInput.value);
-                        document.getElementById("payAmount").value = "";
-                        document.getElementById("friendInput").value = "";
-                    } else {
-                        notEnoughAlert();
+            if(GKCscoreboard_object2.exists()){
+                var GKC2 = GKCscoreboard_object2.val().GKC
+                firebase.database().ref("GKCscoreboard/" + displayName).get().then(function(GKCscoreboard_object){
+                    if(GKCscoreboard_object.exists()){
+                        const GKC = GKCscoreboard_object.val().GKC
+                        const payAmountCheck = parseInt(document.getElementById("payAmount").value);
+                        if(GKC >= payAmountCheck) {
+                            firebase.database().ref("GKCscoreboard/" + displayName).update({
+                                GKC: GKC - parseInt(payAmount.value)
+                            });
+                            firebase.database().ref("GKCscoreboard/" + friendInput.value).update({
+                                GKC: GKC2 + parseInt(payAmount.value)
+                            });
+                            addmoneytofriend();
+                            transferSuccessAlert(payAmount.value, friendInput.value);
+                            document.getElementById("payAmount").value = "";
+                            document.getElementById("friendInput").value = "";
+                        } else {
+                            notEnoughAlert();
+                        }
                     }
-                } else {
-                    invalidPersonAlert();
-                }
-            });
+                });
+            } else {
+                invalidPersonAlert();
+            }
         });
     } else {
         notAuthAlert();
@@ -171,6 +173,6 @@ function notEnoughAlert() {
     alert.style.position = "absolute";
     alert.style.right = "40px";
     alert.style.bottom = "30px";
-    alert.innerHTML = `<strong>Error!</strong> You don't have enough money to perform this action! <button type="button" class="btn-close" onclick="document.getElementById('notEnoughAlert').remove()" aria-label="Close"></button>`
+    alert.innerHTML = `<strong>Error!</strong> You don't have enough GKC to perform this action! <button type="button" class="btn-close" onclick="document.getElementById('notEnoughAlert').remove()" aria-label="Close"></button>`
     document.body.appendChild(alert);
 }

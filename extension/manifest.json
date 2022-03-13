@@ -1,8 +1,8 @@
 {
     "manifest_version": 2,
-    "name": "GKC Extension",
+    "name": "GKC Clicker",
     "description": "Gorm Kun Coin Clicker by zhiftyDK",
-    "version": "1.0",
+    "version": "1.1",
     "browser_action": {},
     "icons": {
         "16": "images/GKC_16.png",
