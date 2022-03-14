@@ -43,10 +43,60 @@ function bet(){
     }
 }
 
-function continueGame() {
-    firebase.database().ref("jackpot/").on("value", function(GKCscoreboard_object){
+firebase.database().ref("jackpot/").on("value", function(jackpot_object){
+    document.querySelectorAll("#gameUsers").forEach(function(element){element.remove()});
+    if(jackpot_object.exists()){
+        const keys = Object.keys(jackpot_object.val());
+        let users = [];
+        keys.map(username => {
+            users.push({...eval(`jackpot_object.val().${username}`), username});
+        })
+        users.sort(({betAmount:a}, {betAmount:b}) => b-a);
 
-    });
+        let betAmountSum = 0;
+        users.forEach(element => {
+            betAmountSum = betAmountSum + element.betAmount
+        });
+
+        let userChance = [];
+        
+        for (let i = 0; i < users.length; i++) {
+            let username = users[i].username;
+            let betAmount = users[i].betAmount;
+            let picture = users[i].picture;
+            let winChance = parseFloat(betAmount / betAmountSum * 100).toFixed(2);
+            
+            for (let i = 0; i < parseFloat(betAmount / betAmountSum * 100).toFixed(0); i++) {
+                userChance.push(username);
+            }
+            console.log(userChance);
+
+            if(username == applicationName){
+                document.getElementById("removeOnJoin").style.display = "none";
+                document.getElementById("playerPicture").style.display = "block";
+                document.getElementById("playerPicture").src = profilePicture;
+                document.getElementById("bettedAmount").innerText = `You have entered the poll with ${betAmount} GKC!`
+                document.getElementById("winningChance").innerText = `Your chance of winning is: ${winChance}%`
+            } else {
+                console.log(users[i])
+                const div = document.createElement("div");
+                div.innerHTML = `
+                <div class="d-flex justify-content-center align-items-center m-2">
+                    <img src="${picture}" style="height: 5vh; margin-right: 10px;">
+                    <p style="color: white; margin-top: 12px; margin-right: 10px;"><strong>User:</strong> ${username}</p>
+                    <p style="color: white; margin-top: 12px; margin-right: 10px;"><strong>Bet:</strong> ${betAmount} GKC</p>
+                    <p style="color: white; margin-top: 12px;"><strong>WinChance:</strong> ${winChance}%</p>
+                </div>
+                `;
+                div.id = "gameUsers";
+                document.getElementById("friends").appendChild(div);
+            }
+        }
+    }
+});
+
+function findWinner(){
+
 }
 
 function notAuthAlert() {

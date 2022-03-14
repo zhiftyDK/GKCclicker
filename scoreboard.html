@@ -11,6 +11,12 @@
     <style>
         body {
             background-color: #212529;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        
+        body::-webkit-scrollbar {
+        display: none;
         }
 
         table {
@@ -89,7 +95,7 @@
             </div>
         </div>
         <div class="row mt-2">
-            <div class="col-12 d-flex justify-content-center align-items-center">
+            <div class="col-12 mb-5 d-flex justify-content-center align-items-center">
                 <table id="scoreboard">
                     <tr>
                         <th>Ranking</th>
