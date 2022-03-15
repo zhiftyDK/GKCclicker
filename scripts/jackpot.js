@@ -183,6 +183,7 @@ function findWinner(entries){
             }
         }
     }
+    return;
 }
 
 function notAuthAlert() {
