@@ -27,7 +27,7 @@ function bet(){
                             GKC: GKC - parseInt(document.getElementById("betAmount").value)
                         });
                         document.getElementById("removeOnJoin").style.display = "none";
-                        document.getElementById("playerPicture").style.display = "block";
+                        document.getElementById("player").style.display = "block";
                         document.getElementById("playerPicture").src = profilePicture;
                         document.getElementById("bettedAmount").innerText = `You have entered the poll with ${payAmountCheck} GKC!`
                         transferSuccessAlert(payAmountCheck);
@@ -57,6 +57,29 @@ function bet(){
     }
 }
 
+function leaveJackpot(){
+    
+    document.getElementById("removeOnJoin").style.display = "flex";
+    document.getElementById("player").style.display = "none";
+
+    firebase.database().ref("jackpot/" + applicationName).get().then(function(jackpot_object){
+        if(jackpot_object.exists()){
+            const bettedGKC = jackpot_object.val().betAmount;
+            firebase.database().ref("GKCscoreboard/" + applicationName).get().then(function(GKCscoreboard_object){
+                if(GKCscoreboard_object.exists()){
+                    const GKC = GKCscoreboard_object.val().GKC
+                    firebase.database().ref("GKCscoreboard/" + applicationName).update({
+                        GKC: GKC + bettedGKC
+                    });
+                }
+            });
+        }
+    });
+
+    document.getElementById("betAmount").value = "";
+    firebase.database().ref("jackpot/").remove();
+}
+
 firebase.database().ref("jackpot/").on("value", function(jackpot_object){
     document.querySelectorAll("#gameUsers").forEach(function(element){element.remove()});
     if(jackpot_object.exists()){
@@ -74,6 +97,7 @@ firebase.database().ref("jackpot/").on("value", function(jackpot_object){
 
         const timeLeft = document.getElementById("timeLeft");
         if(users.length >= 2){
+            document.getElementById("leavebutton").style.display = "none";
             firebase.database().ref("endTime/").on("value", function(endTime_object){
                 if(endTime_object.exists()){
                     const endTime = endTime_object.val().time;
@@ -85,7 +109,7 @@ firebase.database().ref("jackpot/").on("value", function(jackpot_object){
                             timeLeft.innerText = secondsLeft;
                         } else {
                             firebase.database().ref("jackpot/").remove();
-                            document.getElementById("removeOnJoin").style.display = "block";
+                            document.getElementById("removeOnJoin").style.display = "flex";
                             document.getElementById("player").style.display = "none";
                             findWinner(users);
                         }
