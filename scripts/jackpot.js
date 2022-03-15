@@ -114,6 +114,7 @@ firebase.database().ref("jackpot/").on("value", function(jackpot_object){
                             firebase.database().ref("jackpot/").remove();
                             document.getElementById("removeOnJoin").style.display = "flex";
                             document.getElementById("player").style.display = "none";
+                            console.log("Finding winner!")
                             findWinner(users);
                         }
                     }, 500);
@@ -153,37 +154,39 @@ firebase.database().ref("jackpot/").on("value", function(jackpot_object){
 });
 
 function findWinner(entries){
-    console.log(entries)
-    const randomPercentage = Math.random() * 100;
-    let currentPercentage = 0;
-    let betAmountSum = 0;
-    entries.forEach(element => {
-        betAmountSum = betAmountSum + element.betAmount
-    });
-
-    for (let i = 0; i < entries.length; i++) {
-        let userPercentage = entries[i].betAmount / betAmountSum * 100;
-        currentPercentage += userPercentage;
-        if(currentPercentage > randomPercentage){
-            console.log(entries[i].username);
-            if(applicationName == entries[i].username){
-                youWin(betAmountSum);
-                firebase.database().ref("GKCscoreboard/" + applicationName).get().then(function(GKCscoreboard_object){
-                    if(GKCscoreboard_object.exists()){
-                        const GKC = GKCscoreboard_object.val().GKC
-                        firebase.database().ref("GKCscoreboard/" + entries[i].username).update({
-                            GKC: GKC + parseInt(betAmountSum)
-                        });
-                    }
-                });
-                return;
-            } else {
-                youLose();
-                return;
+    if(entries != ""){
+        console.log(entries)
+        const randomPercentage = Math.random() * 100;
+        let currentPercentage = 0;
+        let betAmountSum = 0;
+        entries.forEach(element => {
+            betAmountSum = betAmountSum + element.betAmount
+        });
+    
+        for (let i = 0; i < entries.length; i++) {
+            let userPercentage = entries[i].betAmount / betAmountSum * 100;
+            currentPercentage += userPercentage;
+            if(currentPercentage > randomPercentage){
+                console.log(entries[i].username);
+                if(applicationName == entries[i].username){
+                    youWin(betAmountSum);
+                    firebase.database().ref("GKCscoreboard/" + applicationName).get().then(function(GKCscoreboard_object){
+                        if(GKCscoreboard_object.exists()){
+                            const GKC = GKCscoreboard_object.val().GKC
+                            firebase.database().ref("GKCscoreboard/" + entries[i].username).update({
+                                GKC: GKC + parseInt(betAmountSum)
+                            });
+                        }
+                    });
+                    return;
+                } else {
+                    youLose();
+                    return;
+                }
             }
         }
+        entries = "";
     }
-    return;
 }
 
 function notAuthAlert() {
