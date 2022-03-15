@@ -58,7 +58,6 @@ function bet(){
 }
 
 function leaveJackpot(){
-    
     document.getElementById("removeOnJoin").style.display = "flex";
     document.getElementById("player").style.display = "none";
 
