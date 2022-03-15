@@ -176,6 +176,7 @@ function findWinner(entries){
                         });
                     }
                 });
+                return;
             } else {
                 youLose();
                 return;
