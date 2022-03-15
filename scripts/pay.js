@@ -2,7 +2,11 @@ let displayName;
 firebase.auth().onAuthStateChanged((user) => {
     if (user) {
         // User is signed in
-        displayName = user.email.split("@").shift();
+        if(user.email.split("@").shift().replace(/\./g,'').replace(/#/g, "").replace(/\$/g, "").replace(/[\[\]']+/g,'').charAt(0) == /[0-9]/g){
+            displayName = "user_" + user.email.split("@").shift().replace(/\./g,'').replace(/#/g, "").replace(/\$/g, "").replace(/[\[\]']+/g,'');
+        } else {
+            displayName = user.email.split("@").shift().replace(/\./g,'').replace(/#/g, "").replace(/\$/g, "").replace(/[\[\]']+/g,'');
+        }
     }
 });
 
