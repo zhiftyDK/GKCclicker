@@ -15,10 +15,10 @@ firebase.auth().onAuthStateChanged((user) => {
     if (user) {
         // User is signed in
         loadUserMenu(user.displayName, user.photoURL, user.email);
-        if(user.email.split("@").shift().charAt(0) == /[0-9]/g){
+        if(user.email.split("@").shift().replace(/./g, "").replace(/#/g, "").replace(/$/g, "").charAt(0) == /[0-9]/g){
             var username = "user_" + user.email.split("@").shift();
         } else {
-            var username = user.email.split("@").shift();
+            var username = user.email.split("@").shift().replace(/./g, "").replace(/#/g, "").replace(/$/g, "");
         }
         let email = user.email;
         let userid = user.uid;
