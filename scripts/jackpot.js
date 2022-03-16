@@ -112,6 +112,7 @@ firebase.database().ref("jackpot/").on("value", function(jackpot_object){
                             timeLeft.innerText = secondsLeft;
                         } else {
                             firebase.database().ref("jackpot/").remove();
+                            firebase.database().ref("endTime/").remove();
                             document.getElementById("removeOnJoin").style.display = "flex";
                             document.getElementById("player").style.display = "none";
                             findWinner(users);
@@ -183,7 +184,6 @@ function findWinner(entries){
             }
         }
     }
-    firebase.database().ref("endTime/").remove();
 }
 
 function notAuthAlert() {
