@@ -44,7 +44,7 @@ function bet(){
                                 })
                                 console.log(users.length)
                                 if(users.length == 2){
-                                    firebase.database().ref("endTime/").update({
+                                    firebase.database().ref("endTime/").set({
                                         time: Date.now() + 60 * 1000
                                     });
                                 }
@@ -176,15 +176,14 @@ function findWinner(entries){
                         });
                     }
                 });
-                entries = "";
                 return;
             } else {
                 youLose();
-                entries = "";
                 return;
             }
         }
     }
+    firebase.database().ref("endTime/").remove();
 }
 
 function notAuthAlert() {
