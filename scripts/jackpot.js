@@ -100,13 +100,13 @@ firebase.database().ref("jackpot/").on("value", function(jackpot_object){
 
         const timeLeft = document.getElementById("timeLeft");
         if(users.length >= 2){
+            console.log("Users is 2 or larger");
             document.getElementById("leavebutton").style.display = "none";
             firebase.database().ref("endTime/").on("value", function(endTime_object){
                 if(endTime_object.exists()){
+                    console.log("Endtime exists still");
                     const endTime = endTime_object.val().time;
-                    console.log(Date.now());
-                    console.log(endTime);
-                    setInterval(() => {
+                    const secondInterval = setInterval(() => {
                         let secondsLeft = ((endTime - Date.now()) / 1000).toFixed(0);
                         if(secondsLeft > 0){
                             timeLeft.innerText = secondsLeft;
@@ -115,6 +115,7 @@ firebase.database().ref("jackpot/").on("value", function(jackpot_object){
                             firebase.database().ref("endTime/").remove();
                             document.getElementById("removeOnJoin").style.display = "flex";
                             document.getElementById("player").style.display = "none";
+                            clearInterval(secondInterval);
                             findWinner(users);
                         }
                     }, 500);
