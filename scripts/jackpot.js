@@ -176,9 +176,11 @@ function findWinner(entries){
                         });
                     }
                 });
+                entries = "";
                 return;
             } else {
                 youLose();
+                entries = "";
                 return;
             }
         }
