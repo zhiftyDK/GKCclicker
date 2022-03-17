@@ -98,6 +98,11 @@ firebase.database().ref("jackpot/").on("value", function(jackpot_object){
             betAmountSum = betAmountSum + element.betAmount
         });
 
+        if(users.length == 1){
+            users[0].first = true;
+            console.log(users[0])
+        }
+
         const timeLeft = document.getElementById("timeLeft");
         if(users.length >= 2){
             console.log("Users is 2 or larger");
@@ -112,6 +117,7 @@ firebase.database().ref("jackpot/").on("value", function(jackpot_object){
                             timeLeft.innerText = secondsLeft;
                         } else {
                             firebase.database().ref("jackpot/").remove();
+                            firebase.database().ref("jackpotWinner/").remove();
                             firebase.database().ref("endTime/").remove();
                             document.getElementById("removeOnJoin").style.display = "flex";
                             document.getElementById("player").style.display = "none";
@@ -168,23 +174,20 @@ function findWinner(entries){
         currentPercentage += userPercentage;
         if(currentPercentage > randomPercentage){
             console.log(entries[i].username);
-            if(applicationName == entries[i].username){
-                youWin(betAmountSum);
-                firebase.database().ref("GKCscoreboard/" + applicationName).get().then(function(GKCscoreboard_object){
-                    if(GKCscoreboard_object.exists()){
-                        const GKC = GKCscoreboard_object.val().GKC
-                        firebase.database().ref("GKCscoreboard/" + entries[i].username).update({
-                            GKC: GKC + parseInt(betAmountSum)
-                        });
-                    }
+            if(entries[0].first == true){
+                firebase.database().ref().update({
+                    jackpotWinner: entries[i].username
                 });
-                return;
-            } else {
-                youLose();
-                return;
             }
+            return;
         }
     }
+
+    firebase.database().ref("jackpotWinner/").on("value", function(jackpotWinner_object){
+        if(jackpotWinner_object.exists()){
+            console.log(jackpotWinner_object.val());
+        }
+    });
 }
 
 function notAuthAlert() {
