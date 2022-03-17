@@ -201,7 +201,6 @@ function findWinner(entries){
                 } else {
                     youLose();
                 }
-                
             }
         }
     });
