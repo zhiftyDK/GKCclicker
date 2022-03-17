@@ -175,8 +175,8 @@ function findWinner(entries){
         if(currentPercentage > randomPercentage){
             console.log(entries[i].username);
             if(entries[0].first == true){
-                firebase.database().ref().update({
-                    jackpotWinner: entries[i].username
+                firebase.database().ref("jackpotWinner/").update({
+                    winner: entries[i].username
                 });
             }
             return;
@@ -185,18 +185,18 @@ function findWinner(entries){
 
     firebase.database().ref("jackpotWinner/").on("value", function(jackpotWinner_object){
         if(jackpotWinner_object.exists()){
-            console.log(jackpotWinner_object.val());
-            firebase.database().ref("GKCscoreboard/" + jackpotWinner_object.val()).get().then(function(GKCscoreboard_object){
+            console.log(jackpotWinner_object.val().winner);
+            firebase.database().ref("GKCscoreboard/" + jackpotWinner_object.val().winner).get().then(function(GKCscoreboard_object){
                 if(GKCscoreboard_object.exists()){
                     const GKC = GKCscoreboard_object.val().GKC
-                    firebase.database("GKCscoreboard/" + jackpotWinner_object.val()).ref().update({
+                    firebase.database("GKCscoreboard/" + jackpotWinner_object.val().winner).ref().update({
                         GKC: GKC + betAmountSum
                     });
                 }
             });
 
             for (let i = 0; i < entries.length; i++) {
-                if(entries[i].username == jackpotWinner_object.val()){
+                if(entries[i].username == jackpotWinner_object.val().winner){
                     youWin(betAmountSum);
                 } else {
                     youLose();
