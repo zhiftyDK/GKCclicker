@@ -186,6 +186,23 @@ function findWinner(entries){
     firebase.database().ref("jackpotWinner/").on("value", function(jackpotWinner_object){
         if(jackpotWinner_object.exists()){
             console.log(jackpotWinner_object.val());
+            firebase.database().ref("GKCscoreboard/" + jackpotWinner_object.val()).get().then(function(GKCscoreboard_object){
+                if(GKCscoreboard_object.exists()){
+                    const GKC = GKCscoreboard_object.val().GKC
+                    firebase.database("GKCscoreboard/" + jackpotWinner_object.val()).ref().update({
+                        GKC: GKC + betAmountSum
+                    });
+                }
+            });
+
+            for (let i = 0; i < entries.length; i++) {
+                if(entries[i].username == jackpotWinner_object.val()){
+                    youWin(betAmountSum);
+                } else {
+                    youLose();
+                }
+                
+            }
         }
     });
 }
